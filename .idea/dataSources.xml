@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="PostgreSQL - cookbook@localhost" uuid="000181af-7664-410e-b2d9-baaf2a6ec01d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/cookbook</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="cookbook@localhost" uuid="3fe11922-017d-4f30-8864-152dceb901bf">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/cookbook</jdbc-url>
+    </data-source>
+  </component>
+</project>

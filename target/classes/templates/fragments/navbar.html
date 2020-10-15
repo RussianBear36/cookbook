@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="mynavbar">
+
+    <a class="navbar-brand" href="/main" style="font-size: 25px;">Главная</a>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="font-size: 20px;">
+
+        <div>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="/editProfile">Изменить профиль</a>
+                <a class="nav-item nav-link" href="/createRecipe">Создать рецепт</a>
+                <a class="nav-item nav-link active" href="favorites">Избранное</a>
+                <a class="nav-item nav-link" href="/seeReviewOnMyRecipe">Уведомления</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+        <ul class="navbar-nav">
+            <!--                    <li class="nav-item active">-->
+            <!--                        <span class="nav-item" th:text="${#authitication.name} + '[' + ${#authentication.principal.authorities} + ']'"></span>-->
+            <!--                    </li>-->
+            <li class="nav-item active">
+                <a th:href="@{/logout}" class="nav-item nav-link">Выйти</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+</body>
+</html>

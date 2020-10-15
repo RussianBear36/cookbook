@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Главная</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+    </style>
+
+</head>
+
+<body class="text-center">
+
+<div th:replace="fragments/navbar :: mynavbar"></div>
+
+<h3>Найти рецепт</h3>
+
+<form method="post" action="/main">
+
+    <div class="container">
+        <div class="form-row row justify-content-center">
+            <div class="form-group mx-sm-3 mb-2" style="width: 500px">
+                <label for="recipeName" class="sr-only">Название</label>
+                <input type="text" class="form-control" id="recipeName" name="recipeName"
+                       placeholder="Название рецепта">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Найти</button>
+            <p class="mx-sm-3 mb-2">
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Открыть фильтры
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+
+                <div class="form-row row justify-content-around">
+
+                    <div class="form-group text-left">
+                        <p class="text-center font-weight-bold">Основа</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theBase" id="noSelectBase"
+                                   value="Не выбрано" checked>
+                            <label class="form-check-label" for="noSelectBase">Не выбрано</label>
+                        </div>
+                        <div class="form-check" th:each="base : ${baseList}">
+                            <input class="form-check-input" type="radio" name="theBase" th:id="${base}"
+                                   th:value="${base}">
+                            <label class="form-check-label" th:for="${base}" th:text="${base}"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-left">
+                        <p class="text-center font-weight-bold">Кухня</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theKitchen" id="noSelectKitchen"
+                                   value="Не выбрано" checked>
+                            <label class="form-check-label" for="noSelectKitchen">Не выбрано</label>
+                        </div>
+                        <div class="form-check" th:each="kitchen : ${kitchensList}">
+                            <input class="form-check-input" type="radio" name="theKitchen" th:id="${kitchen}"
+                                   th:value="${kitchen}">
+                            <label class="form-check-label" th:for="${kitchen}" th:text="${kitchen}"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-left">
+                        <p class="text-center font-weight-bold">Категория</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theCategory" id="noSelectCategory"
+                                   value="Не выбрано" checked>
+                            <label class="form-check-label" for="noSelectCategory">Не выбрано</label>
+                        </div>
+                        <div class="form-check" th:each="category : ${categoriesList}">
+                            <input class="form-check-input" type="radio" name="theCategory" th:id="${category}"
+                                   th:value="${category}">
+                            <label class="form-check-label" th:for="${category}" th:text="${category}"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-left">
+                        <p class="text-center font-weight-bold">Способы приготовления</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="theCookMethod" id="noSelectCookMethod"
+                                   value="Не выбрано" checked>
+                            <label class="form-check-label" for="noSelectCookMethod">Не выбрано</label>
+                        </div>
+                        <div class="form-check" th:each="cookMethod : ${cookMethodList}">
+                            <input class="form-check-input" type="checkbox" name="theCookMethod" th:id="${cookMethod}"
+                                   th:value="${cookMethod}">
+                            <label class="form-check-label" th:for="${cookMethod}" th:text="${cookMethod}"></label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<!--<div th:if="${allRecipeList}">-->
+<div class="container  mb-4 mt-4 border border-primary rounded-lg p-4" th:each="recipe : ${allRecipeList}">
+    <form action="/seeTheRecipe" name="getRecipeForm">
+        <input type="hidden" name="recipeId" th:value="${recipe.id}">
+        <button type="submit" class="btn btn-outline-info btn-lg" th:text="${recipe.name}"></button>
+    </form>
+    <div class="row text-left mb-2">
+        <div class="col-md-auto font-weight-bold pr-1" th:text="'Автор: '"></div>
+        <div class="col-md-auto pl-0" th:text="${recipe.authorName}"></div>
+        <!--                <div class="col font-weight-bold" th:text="'Автор: ' + ${recipe.authorName}"></div>-->
+    </div>
+    <div class="row text-left mb-2">
+        <div class="col-md-auto font-weight-bold pr-1" th:text="'Добавлен на сайт: '"></div>
+        <div class="col-md-auto pl-0" th:text="${recipe.date_added}"></div>
+        <!--                <div class="col font-weight-bold" th:text="'Добавлен на сайт: ' + ${recipe.date_added}"></div>-->
+    </div>
+    <div class="row text-center mb-2 font-weight-bold">
+        <div class="col-2" th:text="'Основа: '"></div>
+        <div class="col-3" th:text="'Кухня: '"></div>
+        <div class="col-2" th:text="'Категория: '"></div>
+        <div class="col-5" th:text="'Способ(ы) приготовления: '"></div>
+    </div>
+    <div class="row text-center mb-2">
+        <div class="col-2" th:text="${recipe.base} ? ${recipe.base} : 'Не указано'"></div>
+        <div class="col-3" th:text="${recipe.kitchen} ? ${recipe.kitchen} : 'Не указано'"></div>
+        <div class="col-2" th:text="${recipe.category} ? ${recipe.category} : 'Не указано'"></div>
+        <div class="col-5" th:if="${#lists.isEmpty(recipe.cookMethod) == false}">
+            <span th:each="cookMethod : ${recipe.cookMethod}" th:text="${cookMethodStat.last} ? ${cookMethod} : ${cookMethod} + ', '"></span>
+        </div>
+        <div class="col-5" th:if="${#lists.isEmpty(recipe.cookMethod)}" th:text="'Не указано'"></div>
+    </div>
+</div>
+<!--</div>-->
+
+
+<!--<p>-->
+<!--    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">-->
+<!--        Ссылка с href-->
+<!--    </a>-->
+<!--    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
+<!--        Кнопка с data-target-->
+<!--    </button>-->
+<!--</p>-->
+<!--<div class="collapse" id="collapseExample">-->
+<!--    <div class="card card-body">-->
+<!--        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.-->
+<!--    </div>-->
+<!--</div>-->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
