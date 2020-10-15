@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/editProfile")
-    public String getEditProfilePage(Model model, HttpSession session) {
+    public String getEditProfilePage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("currentUser");
         model.addAttribute("user", user);
         return "editProfile";
@@ -42,11 +42,11 @@ public class UserController {
     @PostMapping("/editProfile")
     public String editProfile
             (
+                    HttpSession session,
                     @RequestParam String login,
                     @RequestParam String name,
                     @RequestParam String family,
                     @RequestParam String password,
-                    HttpSession session,
                     HttpServletRequest request
             ) throws SQLException {
         User oldUser = (User) session.getAttribute("currentUser");

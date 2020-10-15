@@ -1,15 +1,20 @@
 package ru.koldaev.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import ru.koldaev.aspects.SecurityAspect;
 
 @Configuration
+@EnableAspectJAutoProxy
+@ComponentScan
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
@@ -37,6 +42,12 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
         return resolver;
+    }
+
+    @Bean
+    public SecurityAspect securityAspect()
+    {
+        return new SecurityAspect();
     }
 
     @Override

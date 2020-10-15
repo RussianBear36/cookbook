@@ -59,13 +59,10 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String getFirstPage(Model model, HttpSession session) throws SQLException {
+    public String getFirstPage(HttpSession session, Model model) throws SQLException {
 
         model = getBaseValues(model);
 
-        if (session.getAttribute("currentUser") == null) {
-            return "errorPage";
-        }
         List<Recipe> allRecipeList = findService.getListAllRecipe();
         model.addAttribute("allRecipeList", allRecipeList);
         return "index";
@@ -74,8 +71,8 @@ public class MainController {
     @PostMapping("/main")
     public String findRecipe
             (
-                    Model model,
                     HttpSession session,
+                    Model model,
                     @RequestParam(required = false) String recipeName,
                     @RequestParam(required = false) String theBase,
                     @RequestParam(required = false) String theKitchen,
@@ -98,6 +95,7 @@ public class MainController {
     @PostMapping("/createRecipe")
     public String createRecipe
             (
+                    HttpSession session,
                     @RequestParam String recipeName,
                     @RequestParam String theBase,
                     @RequestParam String theKitchen,
@@ -112,8 +110,7 @@ public class MainController {
                     @RequestParam(required = false) String fats,
                     @RequestParam(required = false) String carbohydrates,
                     @RequestParam(required = false) String portions,
-                    @RequestParam String source,
-                    HttpSession session
+                    @RequestParam String source
             ) throws SQLException {
 //        System.out.println(recipeName);
 //        System.out.println(theBase);
@@ -180,7 +177,7 @@ public class MainController {
     }
 
     @GetMapping("/seeTheRecipe")
-    public String seeTheRecipe(Model model, HttpSession session, @RequestParam int recipeId) throws SQLException
+    public String seeTheRecipe(HttpSession session, Model model, @RequestParam int recipeId) throws SQLException
     {
         Recipe recipe = findService.getTheRecipe(recipeId);
         List<Review> reviewList = findService.getReviewList(recipeId);
