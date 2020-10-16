@@ -18,9 +18,9 @@
             if (elementForClone.style.display == "none")
             {
                 elementForClone.style.display = "block";
-                document.getElementById("ingrNameForClone").setAttribute("disabled", "false");
-                document.getElementById("countNameForClone").setAttribute("disabled", "false");
-                document.getElementById("unitNameForClone").setAttribute("disabled", "false");
+                document.getElementById("ingrNameForClone").removeAttribute("disabled");
+                document.getElementById("countNameForClone").removeAttribute("disabled");
+                document.getElementById("unitNameForClone").removeAttribute("disabled");
                 document.getElementById("ingrNameForClone").setAttribute("required", "true");
                 document.getElementById("countNameForClone").setAttribute("required", "true");
                 document.getElementById("unitNameForClone").setAttribute("required", "true");
